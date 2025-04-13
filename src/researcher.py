@@ -1,0 +1,19 @@
+import os
+
+# from serpapi import GoogleSearch
+import serpapi
+from dotenv import load_dotenv
+
+load_dotenv()
+
+def research_topic(topic="coffee"):
+    params = {
+        "engine": "google",
+        "q": topic,
+        "api_key": os.getenv("SERPAI_API_KEY")
+    }
+
+    search = serpapi.search(q="Coffee", engine="google", location="Austin, Texas", hl="en", gl="us")
+
+    # search = GoogleSearch(params)
+    return search.get("organic_results", [])[:3]

@@ -1,0 +1,6 @@
+requests
+bs4
+serpapi==0.1.5
+torch==2.2.2
+transformers==4.51.2
+python-dotenv==1.1.0
