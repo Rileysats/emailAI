@@ -1,16 +1,24 @@
-from topics import load_topics
-from researcher import research_topic
-from summariser import summarize_articles
+from helpers import load_topics
+from summariser import Summariser
+from researcher import Researcher
+from dotenv import load_dotenv
+from logger import ProjectLogger
+
+logger = ProjectLogger(__name__).get_logger()
+
+load_dotenv()
 
 if __name__ == "__main__":
+
     topics = load_topics()
 
-    research_data = {topic: research_topic(topic) for topic in topics}
+    researcher = Researcher()
+    research_data = {topic: researcher.research_topic(topic) for topic in topics}
 
     summaries = {}
+    summariser = Summariser()
 
     for topic, articles in research_data.items():
-        summaries[topic] = summarize_articles(articles)
-
+        summaries[topic] = summariser.summarize_articles(articles)
 
     print(summaries)

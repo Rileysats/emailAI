@@ -1,19 +1,23 @@
 import os
-
-# from serpapi import GoogleSearch
 import serpapi
-from dotenv import load_dotenv
+from logger import ProjectLogger
 
-load_dotenv()
+logger = ProjectLogger(__name__).get_logger()
 
-def research_topic(topic):
-    params = {
-        "engine": "google",
-        "q": topic,
-        "api_key": os.getenv("SERPAI_API_KEY")
-    }
+class Researcher():
+    def __init__(self):
+        pass
 
-    search = serpapi.search(q=topic, engine="google", location="Melbourne, Australia", hl="en", gl="us")
+    def research_topic(self, topic):
+        params = {
+            "engine": "google",
+            "q": topic,
+            "api_key": os.getenv("SERPAI_API_KEY"),
+            "tbs": "qdr:w"
+        }
+        logger.info(f"Researching topic: {topic}")
 
-    # search = GoogleSearch(params)
-    return search.get("organic_results", [])[:1]
+        search = serpapi.search(q=topic, engine="google", api_key=os.getenv("SERPAI_API_KEY"), hl="en", gl="au", tbs="qdr:w")
+
+        # search = GoogleSearch(params)
+        return search.get("organic_results", [])[:1]
